@@ -8,6 +8,8 @@
 #include "PuzzlePlatformsGameInstance.generated.h"
 
 class UUserWidget;
+class UMainMenu;
+class UPauseMenu;
 
 UCLASS()
 class PUZZLEPLATFORMS_API UPuzzlePlatformsGameInstance : public UGameInstance, public IMenuInterface
@@ -22,14 +24,19 @@ public:
     UFUNCTION(BlueprintCallable)
     void LoadMenu();
 
+    UFUNCTION(BlueprintCallable)
+    void LoadPauseMenu();
+
     UFUNCTION(Exec)
     virtual void Host() override;
 
     UFUNCTION(Exec)
-    void Join(const FString& Address) const;
+    virtual void Join(const FString& Address) override;
 
 private:
     TSubclassOf<UUserWidget> MenuClass;
-
-    class UMainMenu* Menu;
+    TSubclassOf<UUserWidget> PauseMenuClass;
+    
+    UMainMenu* Menu;
+    UPauseMenu* PauseMenu;
 };

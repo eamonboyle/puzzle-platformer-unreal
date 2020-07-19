@@ -5,19 +5,27 @@
 #include "Blueprint/UserWidget.h"
 #include "PlatformTrigger.h"
 #include "MenuSystem/MainMenu.h"
+#include "MenuSystem/PauseMenu.h"
+#include "MenuSystem/MenuWidget.h"
 
 UPuzzlePlatformsGameInstance::UPuzzlePlatformsGameInstance(const FObjectInitializer& ObjectInitializer)
 {
     const ConstructorHelpers::FClassFinder<UUserWidget> BPMenuClass(TEXT("/Game/Blueprints/UI/WBP_MainMenu"));
+    const ConstructorHelpers::FClassFinder<UUserWidget> BPPauseMenuClass(TEXT("/Game/Blueprints/UI/WBP_PauseMenu"));
 
     if (!ensure(BPMenuClass.Class != nullptr)) return;
 
     MenuClass = BPMenuClass.Class;
+
+    if (!ensure(BPPauseMenuClass.Class != nullptr)) return;
+
+    PauseMenuClass = BPPauseMenuClass.Class;
 }
 
 void UPuzzlePlatformsGameInstance::Init()
 {
     UE_LOG(LogTemp, Warning, TEXT("Found class %s"), *MenuClass->GetName());
+    UE_LOG(LogTemp, Warning, TEXT("Found class %s"), *PauseMenuClass->GetName());
 }
 
 void UPuzzlePlatformsGameInstance::LoadMenu()
@@ -30,6 +38,18 @@ void UPuzzlePlatformsGameInstance::LoadMenu()
 
     Menu->Setup();
     Menu->SetMenuInterface(this);
+}
+
+void UPuzzlePlatformsGameInstance::LoadPauseMenu()
+{
+    if (!ensure(PauseMenuClass != nullptr)) return;
+
+    PauseMenu = CreateWidget<UPauseMenu>(this, PauseMenuClass);
+
+    if (!ensure(PauseMenu != nullptr)) return;
+
+    PauseMenu->Setup();
+    PauseMenu->SetMenuInterface(this);
 }
 
 void UPuzzlePlatformsGameInstance::Host()
@@ -51,8 +71,13 @@ void UPuzzlePlatformsGameInstance::Host()
     World->ServerTravel("/Game/Maps/Game?listen");
 }
 
-void UPuzzlePlatformsGameInstance::Join(const FString& Address) const
+void UPuzzlePlatformsGameInstance::Join(const FString& Address)
 {
+    if (Menu != nullptr)
+    {
+        Menu->TearDown();
+    }
+    
     UEngine* Engine = GetEngine();
     if (!ensure(Engine != nullptr))
     {
