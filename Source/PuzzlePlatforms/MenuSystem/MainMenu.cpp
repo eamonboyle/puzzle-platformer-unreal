@@ -4,6 +4,11 @@
 #include "MainMenu.h"
 #include "Components/Button.h"
 
+void UMainMenu::SetMenuInterface(IMenuInterface* NewMenuInterface)
+{
+    this->MenuInterface = NewMenuInterface;
+}
+
 bool UMainMenu::Initialize()
 {
     if (!Super::Initialize()) return false;
@@ -24,6 +29,11 @@ bool UMainMenu::Initialize()
 void UMainMenu::HostServer()
 {
     UE_LOG(LogTemp, Warning, TEXT("Host Clicked"));
+
+    if (MenuInterface != nullptr)
+    {
+        MenuInterface->Host();
+    }
 }
 
 void UMainMenu::JoinServer()
