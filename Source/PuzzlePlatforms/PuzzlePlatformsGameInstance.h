@@ -18,11 +18,14 @@ public:
 
     virtual void Init() override;
 
-    UFUNCTION(Exec)
-    void Host();
+    UFUNCTION(BlueprintCallable)
+    void LoadMenu();
 
     UFUNCTION(Exec)
-    void Join(const FString& Address);
+    void Host() const;
+
+    UFUNCTION(Exec)
+    void Join(const FString& Address) const;
 
     private:
     TSubclassOf<UUserWidget> MenuClass;

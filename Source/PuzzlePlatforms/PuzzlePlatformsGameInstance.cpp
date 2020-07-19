@@ -19,7 +19,24 @@ void UPuzzlePlatformsGameInstance::Init()
     UE_LOG(LogTemp, Warning, TEXT("Found class %s"), *MenuClass->GetName());
 }
 
-void UPuzzlePlatformsGameInstance::Host()
+void UPuzzlePlatformsGameInstance::LoadMenu()
+{
+    if (!ensure(MenuClass != nullptr))
+    {
+        return;
+    }
+    
+    UUserWidget* Menu = CreateWidget<UUserWidget>(this, MenuClass);
+
+    if (!ensure(Menu != nullptr))
+    {
+        return;
+    }
+
+    Menu->AddToViewport();
+}
+
+void UPuzzlePlatformsGameInstance::Host() const
 {
     UEngine* Engine = GetEngine();
     if (!ensure(Engine != nullptr))
@@ -39,7 +56,7 @@ void UPuzzlePlatformsGameInstance::Host()
     World->ServerTravel("/Game/Maps/Game?listen");
 }
 
-void UPuzzlePlatformsGameInstance::Join(const FString& Address)
+void UPuzzlePlatformsGameInstance::Join(const FString& Address) const
 {
     UEngine* Engine = GetEngine();
     if (!ensure(Engine != nullptr))
