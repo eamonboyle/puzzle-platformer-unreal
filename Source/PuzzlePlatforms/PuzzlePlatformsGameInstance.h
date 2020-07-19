@@ -33,6 +33,8 @@ public:
     UFUNCTION(Exec)
     virtual void Join(const FString& Address) override;
 
+    virtual void Leave() override;
+
 private:
     TSubclassOf<UUserWidget> MenuClass;
     TSubclassOf<UUserWidget> PauseMenuClass;

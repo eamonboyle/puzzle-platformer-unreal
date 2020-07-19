@@ -9,6 +9,8 @@
 
 #include "PauseMenu.generated.h"
 
+class UButton;
+
 /**
  * 
  */
@@ -19,4 +21,15 @@ class PUZZLEPLATFORMS_API UPauseMenu : public UMenuWidget
 
 protected:
     virtual bool Initialize() override;
+
+private:
+    UPROPERTY(meta = (BindWidget))
+    UButton* QuitButton;
+    UPROPERTY(meta = (BindWidget))
+    UButton* CancelButton;
+
+    UFUNCTION()
+    void QuitGame();
+    UFUNCTION()
+    void HidePauseMenu();
 };
