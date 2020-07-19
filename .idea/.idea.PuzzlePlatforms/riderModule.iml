@@ -166,6 +166,7 @@
     <content url="file://F:/Epic Games/UE_4.25/Engine/Plugins/Media/TimecodeSynchronizer" />
     <content url="file://F:/Epic Games/UE_4.25/Engine/Plugins/Media/WebMMedia" />
     <content url="file://F:/Epic Games/UE_4.25/Engine/Plugins/Media/WmfMedia" />
+    <content url="file://F:/Epic Games/UE_4.25/Engine/Plugins/MegascansPlugin" />
     <content url="file://F:/Epic Games/UE_4.25/Engine/Plugins/MeshPainting" />
     <content url="file://F:/Epic Games/UE_4.25/Engine/Plugins/Messaging/MessagingDebugger" />
     <content url="file://F:/Epic Games/UE_4.25/Engine/Plugins/Messaging/TcpMessaging" />
@@ -255,9 +256,9 @@
     <content url="file://F:/Epic Games/UE_4.25/Engine/Plugins/Runtime/MicrosoftSpatialAudio" />
     <content url="file://F:/Epic Games/UE_4.25/Engine/Plugins/Runtime/MixedRealityCaptureFramework" />
     <content url="file://F:/Epic Games/UE_4.25/Engine/Plugins/Runtime/MobilePatchingUtils" />
-    <content url="file://F:/Epic Games/UE_4.25/Engine/Plugins/Runtime/Nvidia/Ansel" />
     <content url="file://F:/Epic Games/UE_4.25/Engine/Plugins/Runtime/NetworkPrediction" />
     <content url="file://F:/Epic Games/UE_4.25/Engine/Plugins/Runtime/NetworkPredictionExtras" />
+    <content url="file://F:/Epic Games/UE_4.25/Engine/Plugins/Runtime/Nvidia/Ansel" />
     <content url="file://F:/Epic Games/UE_4.25/Engine/Plugins/Runtime/OSC" />
     <content url="file://F:/Epic Games/UE_4.25/Engine/Plugins/Runtime/Oculus/OculusAudio" />
     <content url="file://F:/Epic Games/UE_4.25/Engine/Plugins/Runtime/Oculus/OculusAvatar" />

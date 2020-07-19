@@ -6,23 +6,24 @@
 #include "Engine/GameInstance.h"
 #include "PuzzlePlatformsGameInstance.generated.h"
 
-/**
- * 
- */
+class UUserWidget;
+
 UCLASS()
 class PUZZLEPLATFORMS_API UPuzzlePlatformsGameInstance : public UGameInstance
 {
-	GENERATED_BODY()
+    GENERATED_BODY()
 
-	public:
-	UPuzzlePlatformsGameInstance(const FObjectInitializer &ObjectInitializer);
+public:
+    UPuzzlePlatformsGameInstance(const FObjectInitializer& ObjectInitializer);
 
-	virtual void Init() override;
+    virtual void Init() override;
 
-	UFUNCTION(Exec)
-	void Host();
+    UFUNCTION(Exec)
+    void Host();
 
-	UFUNCTION(Exec)
+    UFUNCTION(Exec)
     void Join(const FString& Address);
-	
+
+    private:
+    TSubclassOf<UUserWidget> MenuClass;
 };
