@@ -136,8 +136,10 @@ void UPuzzlePlatformsGameInstance::RefreshServerList()
     SessionSearch = MakeShareable(new FOnlineSessionSearch());
     if (SessionSearch.IsValid())
     {
-        SessionSearch->bIsLanQuery = true;
-        UE_LOG(LogTemp, Warning, TEXT("Starting to find sessions..."));
+        //SessionSearch->bIsLanQuery = true;
+        SessionSearch->MaxSearchResults = 100;
+        SessionSearch->QuerySettings.Set(SEARCH_PRESENCE, true, EOnlineComparisonOp::Equals);
+        UE_LOG(LogTemp, Warning, TEXT("Starting Find Session"));
         SessionInterface->FindSessions(0, SessionSearch.ToSharedRef());
     }
 }
@@ -198,24 +200,24 @@ void UPuzzlePlatformsGameInstance::OnFindSessionsComplete(bool Success)
 void UPuzzlePlatformsGameInstance::OnJoinSessionComplete(FName SessionName, EOnJoinSessionCompleteResult::Type Result)
 {
     if (!SessionInterface.IsValid()) return;
-    
+
     FString Address;
     if (!SessionInterface->GetResolvedConnectString(SessionName, Address))
     {
         UE_LOG(LogTemp, Warning, TEXT("Could not resolve connection string"));
         return;
     }
-    
+
     // add an on screen debug message
     UEngine* Engine = GetEngine();
     if (!ensure(Engine != nullptr)) return;
-    
+
     Engine->AddOnScreenDebugMessage(-1, 5.f, FColor::Green, FString::Printf(TEXT("Joining %s"), *Address));
-    
+
     // take the client to the server
     APlayerController* PlayerController = GetFirstLocalPlayerController();
     if (!ensure(PlayerController != nullptr)) return;
-    
+
     PlayerController->ClientTravel(FString::Printf(TEXT("%s"), *Address), ETravelType::TRAVEL_Absolute);
 }
 
@@ -224,9 +226,11 @@ void UPuzzlePlatformsGameInstance::CreateSession()
     if (SessionInterface.IsValid())
     {
         FOnlineSessionSettings SessionSettings;
-        SessionSettings.bIsLANMatch = true;
+        SessionSettings.bIsLANMatch = false;
         SessionSettings.NumPublicConnections = 2;
         SessionSettings.bShouldAdvertise = true;
+        SessionSettings.bUsesPresence = true;
+
         SessionInterface->CreateSession(0, SESSION_NAME, SessionSettings);
     }
 }
