@@ -3,7 +3,10 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "OnlineSessionSettings.h"
+#include "OnlineSubsystem.h"
 #include "Engine/GameInstance.h"
+#include "Interfaces/OnlineSessionInterface.h"
 #include "MenuSystem/MenuInterface.h"
 #include "PuzzlePlatformsGameInstance.generated.h"
 
@@ -31,9 +34,11 @@ public:
     virtual void Host() override;
 
     UFUNCTION(Exec)
-    virtual void Join(const FString& Address) override;
+    virtual void Join(uint32 Index) override;
 
     virtual void Leave() override;
+
+    virtual void RefreshServerList() override;
 
 private:
     TSubclassOf<UUserWidget> MenuClass;
@@ -41,4 +46,14 @@ private:
     
     UMainMenu* Menu;
     UPauseMenu* PauseMenu;
+
+    IOnlineSessionPtr SessionInterface;
+    TSharedPtr<FOnlineSessionSearch> SessionSearch;
+
+    void OnCreateSessionComplete(FName SessionName, bool Success);
+    void OnDestroySessionComplete(FName SessionName, bool Success);
+    void OnFindSessionsComplete(bool Success);
+    void OnJoinSessionComplete(FName SessionName, EOnJoinSessionCompleteResult::Type Result);
+
+    void CreateSession();
 };
